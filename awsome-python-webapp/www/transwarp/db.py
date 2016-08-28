@@ -35,7 +35,7 @@
               #     { "id": 2, "name": "Bob"},
               #     { "id": 3, "name": "Adam"}
               # ]
-      3. 支持事物
+      3. 支持务实
          transaction 函数封装了如下功能:
              1. 事务也可以嵌套，内层事务会自动合并到外层事务中，这种事务模型足够满足99%的需求
 """
@@ -533,8 +533,8 @@ class _TransactionCtx(object):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    create_engine('www-data', 'www-data', 'test', '192.168.10.128')
+    create_engine('root', 'password', 'test')
     update('drop table if exists user')
     update('create table user (id int primary key, name text, email text, passwd text, last_modified real)')
-    import doctest
-    doctest.testmod()
+    #import doctest
+    #doctest.testmod()
