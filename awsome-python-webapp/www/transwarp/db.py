@@ -533,8 +533,9 @@ class _TransactionCtx(object):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
-    create_engine('root', 'password', 'test')
+    create_engine('root', 'root', 'test')
     update('drop table if exists user')
     update('create table user (id int primary key, name text, email text, passwd text, last_modified real)')
-    #import doctest
-    #doctest.testmod()
+    import doctest
+    doctest.testmod()
+    print(select_one('select name from user'))
