@@ -1,0 +1,15 @@
+
+a{
+color: gray;
+text-decoration: none;
+}
+body {background-image:url("image/background.gif") no-repeat right bottom;
+      padding-top: 60px;}
+p {margin-left: 30px; margin-right: 30px;
+		margin-top: 50px;font-size: 12pt;color: gray;}
+<style type="text/css">
+/*
+.STYLE1 {font-size: 50px;font-family: "宋体";}
+.STYLE2 {font-size: 50px;font-family: "宋体";}
+*/
+</style>

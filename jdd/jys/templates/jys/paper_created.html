@@ -1,0 +1,89 @@
+<!--生成后模板-->
+<!DOCTYPE html>
+<!--数据查询模板-->
+
+<span style="padding:0px 250px;font-size:25px">某专业2016年《宏观经济学》期末试卷</span><br><br>
+<span style="padding:0px 187px;font-size:18px">证件号__________&nbsp;姓名__________&nbsp;单位___________&nbsp;得分___________</span><br>
+{{dxtitle}}
+{% for x in dxc%}
+<div style="margin:20px 10px">
+	{{forloop.counter}}.
+	{{x.subject}}
+<br>
+{% if x.choice_a|length <= 20 %}
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_a}}
+	{{x.choice_b}}
+	{{x.choice_c}}
+	{{x.choice_d}}
+{% endif %}
+{% if x.choice_a|length > 20 %}
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_a}}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_b}}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_c}}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_d}}<br>
+{% endif %}
+</div>
+{% endfor %}<br>
+{{duoxtitle}}
+{% for x in duoxc%}
+<div style="margin:20px 10px">
+	{{forloop.counter}}.
+	{{x.subject}}
+<br>
+{% if x.choice_a|length <= 10 %}
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_a}}
+	{{x.choice_b}}
+	{{x.choice_c}}
+	{{x.choice_d}}
+	{{x.choice_e}}
+{% endif %}
+{% if x.choice_a|length > 10 %}
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_a}}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_b}}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_c}}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_d}}<br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{x.choice_e}}<br>
+{% endif %}
+</div>
+{% endfor %}<br>
+{{pdtitle}}
+{% for x in pdc%}
+<div style="margin:20px 10px">
+	{{forloop.counter}}.
+	{{x.subject}}(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+</div>
+{% endfor %}<br>
+
+{{tktitle}}
+{% for x in tkc%}
+<div style="margin:20px 10px">
+	{{forloop.counter}}.
+	{{x.subject}}
+</div>
+{% endfor %}<br>
+
+{{jdtitle}}
+{% for x in jdc%}
+<div style="margin:20px 10px">
+	{{forloop.counter}}.
+	{{x.subject}}<br>
+	<div style="color:transparent">
+		{{x.answer}}<br>
+		{{x.answer}}<br>
+		{{x.answer}}
+	</div>
+
+</div>
+{% endfor %}<br>
+{{lstitle}}
+{% for x in lsc%}
+<div style="margin:20px 10px">
+	{{forloop.counter}}.
+	{{x.subject}}<br>
+	<div style="color:transparent">
+		{{x.answer}}<br>
+		{{x.answer}}<br>
+		{{x.answer}}
+	</div>
+</div>
+{% endfor %}<br>

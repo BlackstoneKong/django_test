@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--提交表单-->
+{% extends 'jys/data_query.html' %}
+{% load staticfiles %} 
+	<script type="text/javascript" charset="utf-8">
+	            document.getElementById('sid').value=test("q");
+		document.getElementById("results").style.font-size=30;
+	</script>
+{% block result_block %}
+	<script type="text/javascript">
+		document.getElementById('yanshilogo').style.top='-400px';
+		document.getElementById('divv').style.top='30px';
+		document.getElementById('divv').style.left='150px';
+	</script>
+	<style type="text/css">
+	.results a:hover{text-decoration:underline}
+	</style>
+	<input type="hidden" id='hiddenpage'>
+	
+	<!--<div id="searchresults">-->
+	{% for i in subject_search %}
+	<a href="#" style="font-size:18px;font-family:微软雅黑; color:#2017C1;text-decoration:none;" onmouseover="this.style.textDecoration='underline';"  onmouseout="this.style.textDecoration='none';" id={{forloop.counter}} onclick="byAjax(this.id); showProc()" class="results">
+	{{i.subject}}
+	<br>
+	</a>
+	{% if i.choice_a %}
+	<div style="padding:10px 0px;height:80px;font-size:15px;color:black;font-family:微软雅黑" onmouseover="this.style.background='lightgray'" onmouseout="this.style.background='transparent'">
+	
+
+	{{i.choice_a}}<br>
+	{{i.choice_b}}<br>
+	{{i.choice_c}}<br>
+	{{i.choice_d}}<br>
+	{{i.choice_e}}</div>
+	{% endif %}
+	<div style="size:50%;padding:10px 0px;height:40px;cursor:pointer;margin:0px 0px 0px 880px" ><img onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='1'" src="{% static 'jys/image/点赞.png' %}"><span>&nbsp;23&nbsp;&nbsp;&nbsp;</span><img onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='1'" src="{% static 'jys/image/收藏.png' %}" style="margin:0px 0px -1px 0px"><span>&nbsp;23</span><img onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='1'" src="{% static 'jys/image/转发.png' %}" style="margin:1px 0px -2px 10px"><span>&nbsp;23</span><img onmouseover="this.style.opacity='0.5'" onmouseout="this.style.opacity='1'" src="{% static 'jys/image/评论.png' %}" style="margin:1px 0px -2px 10px"><span>&nbsp;23</span></div>
+	
+	<br>
+	<br>
+	{% endfor%}
+	<p>共找到{{subject}}个关于“<strong>{{query}}</strong>”的搜索结果。</p>
+	<!--</div>-->
+	{% if subject_search %}
+	<div class='page'>
+		<span id='beforepage' style='display: none' onclick="displayPage('-1')">上一页</span>
+	    {% for i in page_nums %}
+	    <a href="#" id={{i}} onclick="displayPage(this.id)" class='pages'>{{i}}</a>
+	    {% endfor %}
+	    {% if onepage_flag %}<!--如果只有一页则不显示下一页-->
+	    	<span id='nextpage' onclick="displayPage('+1')">下一页</span>
+	    {% endif %}
+	</div>
+	{% endif %}
+{% endblock %}

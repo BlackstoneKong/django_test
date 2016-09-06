@@ -1,0 +1,460 @@
+{% load staticfiles %}
+
+<style type="text/css">
+~div,h1,h2,h3,h4,form,a,table,span,img{border:1px solid red;}
+div.img_01{top:0px;left:0px;position:absolute}
+body{overflow:hidden;}
+div.img_02{ height:auto;top:-1px;left:1200px;position:absolute;}
+div.under_head{z-index:1;padding:6px 0px 4px 0px; font-size: 24px;background-color: gray;color: white;position: fixed;top: 0px;left: 50px;width: 1163px;height: 41px}
+div.right{position: absolute;top:100px;left: 170px;size:1030px;}
+div.side{position:absolute;top:170px;left:160px;}
+div.foot{margin:570px -6px 0px -8px;}
+div.sdmenu {font-size:18px;margin:2px 0px 0px 0px;color: black;position: fixed;top:55px;left:-150px;height:620;
+            background-color: transparent;border-right: 0px solid #DCDCDC;border-top: 0px solid #DCDCDC;}
+div.sdmenu div{margin:10px 10px 0px 0px;background: url(menu_bg_hover.png)repeat-x;overflow: hidden;border-bottom:1px solid #EFECE5;border-top:1px solid #EFECE5;border-right:1px solid #EFECE5;box-shadow: 1px 1px 8px -1px gray ;}
+div.sdmenu div.collapsed{height: 39px;}
+div.sdmenu div span{display: block;line-height:39px;width:80px;font-weight: none;cursor: pointer;        
+                     margin-left:30px;font-family: 微软雅黑;}
+div.sdmenu div span a{padding:0; background:none; border:0; font-size:14px;line-height:32px;display:block;}
+div.sdmenu div.collapsed {background: url(menu_bg.gif) repeat-x; width:140px; color:#ad8634}
+div.sdmenu div.collapsed span{color:#ad8634; line-height:39px;color:#2F2C25;}
+div.sdmenu div.collapsed span a.current{color:#f7f2d4;}
+div.sdmenu div a{padding-left:47px;display: block;border-bottom: 1px solid #fff;color: gray;font-size:16px;               background: url("{% static "jys/image/menu_sub_icon.gif" %}") no-repeat 27px 7px #FFFFFF;
+                 line-height:28px;text-decoration: none;font-family: 微软雅黑}
+div.sdmenu div a.current{color:#ad8634;}
+div.sdmenu div span a.current{color: #f8ec94;}
+div.sdmenu div:hover{color: black;background-color: silver;box-shadow: 1px 2px 10px 1px gray;}
+div.sdmenu div a:hover{color: black;}
+div.sdmenu div span a:hover{background:none;color: red}
+~iframe.frame{border:1px;width: 1222px;height:624px;position:absolute;top:90px;left: 140px;}
+div.content{box-shadow: 1px 1px 8px -1px gray;overflow:auto;border:1px;font-size: 18px;padding:30px 0px 30px 145px;width: 1286px;height:562px;position:absolute;top:52px;left: 0px;border-left: 1px solid silver;border-right:none;background-color: rgb(252,252,252);}
+div.time{z-index:499;width: 80px;height:23px;position:fixed;top:12px;left: 1110px;color:white;font-family:Tahoma;font-size:20px;}
+div.nowposition{border:2px;font-size: 14px;width: 400px;height:20px;position:fixed;top:65px;left: 179px;}
+div.righttable{position:absolute;top:0px;left:1163px}
+img.rightimgclass{cursor: pointer;opacity:1;border:1px solid white;border-top:none;border-bottom:none;border-right: none;}
+a:active{ color:black;}
+a:active{ text-decoration: underline;}
+a{color:black;}
+#tongzhitable  tr th:hover{background-color:lightgray}
+#shezhitable tr th:hover{background-color:lightgray}
+#bangzhutable tr th:hover{background-color:lightgray}
+#tongzhitable tr th{cursor: pointer;}
+#shezhitable tr th{font-family:微软雅黑;font-size:17px;border:none;cursor: pointer;}
+#tongzhitable tr th{font-family:微软雅黑;font-size:17px;border:none;cursor: pointer;}
+#bangzhutable tr th{font-family:微软雅黑;font-size:17px;border:none;cursor: pointer;}
+#bangzhutable tr th{cursor: pointer;}
+</style>
+
+
+
+<html>
+<head>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" name="viewport" charset="utf-8" http-equiv="refresh" content="5"/>
+	<title>测试系统</title>
+<script type="text/javascript">
+//显示时间
+  function Displaytime(){
+  var now=new Date();
+  var hour=now.getHours();
+  var mins=now.getMinutes();
+  var secs=now.getSeconds();
+  writetime=document.getElementById('timeid');
+  var sflag=""
+  var mflag=""
+  var hflag=""
+  if (secs < 10){
+    sflag=0
+  }
+  if (mins < 10){
+    mflag=0
+  }
+  if (hour < 10){
+    hflag=0 
+  }
+  writetime.innerHTML=hflag+hour+":"+mflag+mins+":"+sflag+secs;
+}
+setInterval(Displaytime,1000);
+var xx=window.event.x;
+var yx=window.event.y;
+if (xx>40) {
+  alert(xx);
+  document.getElementById('nextpageid').style.display="";
+}
+
+//测试
+function showdiv(x_table)
+{
+  document.getElementById("tongzhitable").style.display="none";
+  document.getElementById("shezhitable").style.display="none";
+  document.getElementById("bangzhutable").style.display="none";
+  document.getElementById(x_table).style.display="";
+}
+function hiddendiv(x_table)
+{  
+  var x=window.event.x;
+  var y=window.event.y;
+  if(x<1213|x>1346|y<50|y>150)
+    document.getElementById(x_table).style.display="none";
+  else
+    document.getElementById(x_table).style.display="";
+}
+function dhkz()
+{
+  if(document.getElementById('my_menu').style.left=="-150px")
+  {
+    document.getElementById('my_menu').style.left="0px";
+    document.getElementById('contentid').style.left="165px";
+    document.getElementById('contentid').style.width="1121px";
+  }
+  else
+  {
+    document.getElementById('my_menu').style.left="-150px";
+    document.getElementById('contentid').style.left="0px";
+    document.getElementById('contentid').style.width="1286px";
+  }
+
+}
+  function handlepaperButton(e){
+
+    var form='dx'+'='+document.getElementById("danxuanid").value+'&duox='+document.getElementById("duoxuanid").value+'&pd='+document.getElementById("panduanid").value+'&tk='+document.getElementById("tiankongid").value+'&jd='+document.getElementById("jiandaid").value+'&ls='+document.getElementById("lunshuid").value;
+    httpRequest=new XMLHttpRequest();
+    httpRequest.onreadystatechange=handlepaperResponse;
+    httpRequest.open("GET",'/jys/paper_created/'+'?'+form);
+    httpRequest.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    httpRequest.send();
+  }
+  function handlepaperResponse(){
+    if (httpRequest.readyState==4 && httpRequest.status==200) {
+
+      document.getElementById("papercontent").innerHTML=httpRequest.responseText;
+    }
+  }
+function setCookie(name,value,iDay){
+    var oDate=new Date();
+    oDate.setDate(oDate.getDate()+iDay);
+    document.cookie=name+'='+value+";expires="+oDate+"; path=/";;
+   
+  }
+function exitSystem(){
+  var se=confirm("确定退出系统？")
+  if(se==true){
+    document.location.href='http://127.0.0.1:8000/jys/logout'
+    setCookie('un',1,-1);
+  }
+}
+
+</script>
+</head>
+
+<body >
+<!--导航栏的收起与展开-->
+<img src="{% static 'jys/image/dhkz.png' %}" alt="dhkz" style="cursor: pointer;position:fixed;left:-1px;top:0px;opacity:1;" onmouseover="this.style.opacity=0.3;" onclick="dhkz()" onmouseout="this.style.opacity=1;">
+
+  <div class="under_head"><span style="cursor:pointer">&nbsp;&nbsp;&nbsp;测试版<span href="#" style="font-family:微软雅黑;font-size:14px;margin:0px 0px 0px 900px" id="unid">{{username}}</span><span style="font-family:微软雅黑;font-size:14px;">，欢迎您！</span></span>
+    <div >
+          <img  style="position:absolute;top:0px;left:1164px;cursor:pointer;" onmouseover="this.style.opacity=0.3;showdiv('tongzhitable');" onmouseout="this.style.opacity=1;hiddendiv('tongzhitable')" id="gongneng" class="gongneng" src="{% static 'jys/image/tongzhi.png' %}" alt="tongzhi"  >
+
+          <img style="position:absolute;top:0px;left:1215px;cursor:pointer" onmouseover="this.style.opacity=0.3;showdiv('shezhitable');" onmouseout="this.style.opacity=1;hiddendiv('shezhitable')"  id="gongneng" class="gongneng" src="{% static 'jys/image/shezhi.png' %}" alt="tongzhi">
+          <img  style="position:absolute;top:0px;left:1266px;cursor:pointer" onmouseover="this.style.opacity=0.3;showdiv('bangzhutable');" onmouseout="this.style.opacity=1;;hiddendiv('bangzhutable')" id="gongneng" class="gongneng" src="{% static 'jys/image/bangzhu.png' %}" alt="tongzhi">
+    </div>
+  </div>
+  <!--<div class="time" id="timeid" > 
+  <script language="javascript">Displaytime();</script></div>-->
+  <script type="text/javascript">
+    //alert(document.getElementById('unid').innerHTML)
+   //alert(document.cookie.indexOf('csrftoken'))
+    if (document.cookie.indexOf('un')==-1) {
+      document.cookie='un='+document.getElementById('unid').innerHTML+';'+';expires=-20000000000'+"; path=/";
+    }
+    if (document.cookie.length>0) {
+      c_start=document.cookie.indexOf('un=');
+      
+      if (c_start!=-1) {
+        c_start=c_start+3;
+        c_end=document.cookie.indexOf(";",c_start);
+        if (c_end==-1) {
+          c_end=document.cookie.length;
+        }
+        if (c_end!=-1) {
+         document.getElementById('unid').innerHTML=document.cookie.substring(c_start,c_end)
+        } 
+        
+      }
+    }
+  </script>
+  <div id="my_menu" class="sdmenu" style="left:-150px">
+      <div ><span >数据查询</span><a class="subnav" href="{% url 'jys:data_query'%}">按题型查询</a>
+                                <a class="subnav" href="{% url 'jys:data_query'%}">按分类查询</a></div>
+      <div ><span>试卷生成</span><a class="subnav" href="{% url 'jys:paper_create'%}" >试卷生成</a></div>
+      <div ><span >在线考试</span><a class="subnav" href="{% url 'jys:online_exam'%}">在线考试</a></div>
+      <div ><span>数据管理</span><a class="subnav" href="/admin">数据管理</a></div>
+  </div>
+
+    <table class="table" id="tongzhitable" border="1" cellpadding="0" cellspacing="0" style="z-index:1000;display:none;position:fixed;left:1213px;top:52px;width:153px;height:100px;background-color:gray;color:white; border-left:none; border-top: none;border-right: none;border-bottom: none;">
+      <tr onmouseout="hiddendiv('tongzhitable');"><th><a href="{% url 'jys:usercenter'%}" >个人主页</a></th></tr>
+      <tr onmouseout="hiddendiv('tongzhitable');"><th><a href="{% url 'jys:usercenter'%}">系统通知</a></th></tr>
+      <tr onmouseout="hiddendiv('tongzhitable');"><th><a href="{% url 'jys:usercenter'%}">好友私信</a></th></tr>
+    </table>
+
+    <table class="table" id="shezhitable" border="1" cellpadding="0" cellspacing="0" style="z-index:1000;display:none;position:fixed;left:1213px;top:52px;width:153px;height:100px;background-color:gray;color:white;border-left: none; border-top: none;border-right: none;border-bottom: none;">
+      <tr  onmouseout="hiddendiv('shezhitable')"><th>设置主题</th></tr>
+      <tr onmouseout="hiddendiv('shezhitable')"><th>改变字体</th></tr>
+      <tr onmouseout="hiddendiv('shezhitable')" onclick="exitSystem();"><th >退出系统</th></tr>
+    </table>
+
+    <table class="table" id="bangzhutable" border="1" cellpadding="0" cellspacing="0" style="z-index:1000;display:none;position:fixed;left:1213px;top:52px;width:153px;height:100px;background-color:gray;color:white;border-left: none; border-top: none;border-right: none;border-bottom: none;">
+      <tr onmouseout="hiddendiv('bangzhutable')" ><th>bangzhu1</th></tr>
+      <tr onmouseout="hiddendiv('bangzhutable')"><th>bangzhu2</th></tr>
+      <tr onmouseout="hiddendiv('bangzhutable')"><th>bangzhu3</th></tr>
+    </table>
+  <!--<iframex class="frame" name="myframe"></iframe>-->
+    <div class="nowposition"></div>
+    <!--<img id="nextpageid";src="{% static 'jys/image/nextpage.png' %}" style="display:none;z-index:1000;position:fixed;left:1216px;top:498px;size:15">-->
+   <!--<div align="center"  id="footer" style="z-index:1000;padding:25px;position:absolute;left:0px;top:543px;width:1349px;height:90px;background-color: rgb(51,51,51);"><span style="font-size:15px;color:white">试卷生成系统是用Django技术开发的站点<br>
+Copyright © 2016 Powered by koca All Rights Reserved<br>Email:nkgoym@outlook.com</span></div>-->
+    <div id="contentid" class="content">{% block content_block %}{%endblock%}</div>
+ 
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+function SDMenu(id) 
+{
+  if (!document.getElementById || !document.getElementsByTagName)
+    return false;
+  this.menu = document.getElementById(id);//获得父列表
+  this.submenus = this.menu.getElementsByTagName("div");//获得子列表
+  this.remember = true;//记忆标示为真
+  this.speed = 10;
+  this.markCurrent = false;
+  this.oneSmOnly = true;//一次只显示一个子菜单
+}
+
+SDMenu.prototype.init = function() 
+{
+  var mainInstance = this;
+  for (var i = 0; i < this.submenus.length; i++)
+    this.submenus[i].getElementsByTagName("span")[0].onclick = function() 
+    {
+      
+      mainInstance.toggleMenu(this.parentNode);
+    };
+  if (this.markCurrent)
+   {
+    var links = this.menu.getElementsByTagName("a");
+    for (var i = 0; i < links.length; i++)
+    {
+      links[0].className="current";
+      links[i].onclick = function() 
+      {
+        
+        var link_t = document.getElementsByTagName("a");
+        for (var i = 0; i < link_t.length; i++)
+        {
+          if(link_t[i].className== "current")
+          {
+            link_t[i].className='';
+          }
+        }
+        this.className = "current";
+      }
+      //if (links[i].href == sampleframe.location.href) {
+      //  links[i].className = "current";
+      //  break;
+      //}
+    }
+  }
+
+  if (this.remember) 
+  {
+    var regex = new RegExp("sdmenu_" + encodeURIComponent(this.menu.id) + "=([01]+)");
+    var match = regex.exec(document.cookie);
+    if (match) 
+    {
+      var states = match[1].split("");
+      for (var i = 0; i < states.length; i++)
+        this.submenus[i].className = (states[i] == 0 ? "collapsed" : "");
+    }
+  }
+};
+
+
+
+SDMenu.prototype.toggleMenu = function(submenu) 
+{
+  if (submenu.className == "collapsed")
+    this.expandMenu(submenu);
+  else
+    this.collapseMenu(submenu);
+};
+
+SDMenu.prototype.expandMenu = function(submenu)
+{
+  var fullHeight = submenu.getElementsByTagName("span")[0].offsetHeight;
+  var links = submenu.getElementsByTagName("a");
+  for (var i = 0; i < links.length; i++)
+    fullHeight += links[i].offsetHeight;
+  
+  var moveBy = Math.round(this.speed * links.length);
+  var mainInstance = this;
+  var intId = setInterval(function()
+  {
+    var curHeight = submenu.offsetHeight;
+    var newHeight = curHeight + moveBy;
+    if (newHeight < fullHeight)
+      submenu.style.height = newHeight + "px";
+    else 
+    {
+      clearInterval(intId);
+      submenu.style.height = "";
+      submenu.className = "";
+      mainInstance.memorize();
+    }
+  }, 30);
+  this.collapseOthers(submenu);
+};
+
+SDMenu.prototype.collapseMenu = function(submenu)
+{
+  var minHeight = submenu.getElementsByTagName("span")[0].offsetHeight;
+  var moveBy = Math.round(this.speed * submenu.getElementsByTagName("a").length);
+  var mainInstance = this;
+  var intId = setInterval(function()
+  {
+    var curHeight = submenu.offsetHeight;
+    var newHeight = curHeight - moveBy;
+    if (newHeight > minHeight)
+      submenu.style.height = newHeight + "px";
+    else 
+    {
+      clearInterval(intId);
+      submenu.style.height = "";
+      submenu.className = "collapsed";
+      mainInstance.memorize();
+    }
+  }, 30);};
+
+SDMenu.prototype.collapseOthers = function(submenu) 
+{
+  if (this.oneSmOnly) 
+  {
+    for (var i = 0; i < this.submenus.length; i++)
+      if (this.submenus[i] != submenu && this.submenus[i].className != "collapsed")
+        this.collapseMenu(this.submenus[i]);
+  }
+};
+/*
+SDMenu.prototype.expandAll = function() 
+{
+  var oldOneSmOnly = this.oneSmOnly;
+  this.oneSmOnly = true;
+  for (var i = 0; i < this.submenus.length; i++)
+    if (this.submenus[i].className == "collapsed")
+      this.expandMenu(this.submenus[i]);
+  this.oneSmOnly = oldOneSmOnly;
+};
+
+SDMenu.prototype.collapseAll = function()
+{
+  for (var i = 0; i < this.submenus.length; i++)
+    if (this.submenus[i].className != "collapsed")
+      this.collapseMenu(this.submenus[i]);
+ };
+*/
+SDMenu.prototype.memorize = function() 
+{
+  if (this.remember) 
+  {
+    var states = new Array();
+    for (var i = 0; i < this.submenus.length; i++)
+      states.push(this.submenus[i].className == "collapsed" ? 0 : 1);
+    var d = new Date();
+    d.setTime(d.getTime() + (30 * 24 * 60 * 60 * 1000));
+    document.cookie = "sdmenu_" + encodeURIComponent(this.menu.id) + "=" + states.join("") + "; expires=" + d.toGMTString() + "; path=/";
+  }
+};
+
+  // ]]>
+  // <![CDATA[
+  var myMenu;
+  window.onload = function()
+  {
+    myMenu = new SDMenu("my_menu");
+    myMenu.init();
+    var firstSubmenu = myMenu.submenus[-1];
+     myMenu.expandMenu(firstSubmenu);    
+  };
+
+  var scrollFunc=function(e)
+  { 
+    e=e || window.event; 
+    if(e.wheelDelta && event.ctrlKey)
+    {//IE/Opera/Chrome 
+     event.returnValue=false;
+    }else if(e.detail)
+    {//Firefox 
+     event.returnValue=false; 
+    } 
+
+     if(event.keyCode==58 && event.ctrlKey)
+    {//IE/Opera/Chrome 
+     event.returnValue=false;
+    }
+    else if(e.detail)
+    {//Firefox 
+     event.returnValue=false; 
+  } 
+ }
+
+ if(document.addEventListener)
+ { 
+ document.addEventListener('DOMMouseScroll',scrollFunc,false); 
+ }//W3C 
+
+ window.onmousewheel=document.onmousewheel=scrollFunc;//IE/Opera/Chrome/Safari
+</script>
+
+<!--
+ar myMenu = new SDMenu("main_menu"); // 菜单ID
+ 
+// 默认参数
+myMenu.speed = 3;                     // 折叠速度
+myMenu.remember = true;               // 是否记录状态
+myMenu.oneSmOnly = false;             // 一次只有一个菜单打开
+myMenu.markCurrent = true;            // 是否高亮当前菜单
+ 
+myMenu.init();
+ 
+// 附加方法
+var firstSubmenu = myMenu.submenus[0];
+myMenu.expandMenu(firstSubmenu);      // 打开一个菜单
+myMenu.collapseMenu(firstSubmenu);    // 关闭一个菜单
+myMenu.toggleMenu(firstSubmenu);      // 当菜单关闭时打开，当菜单打开时关闭
+ 
+myMenu.expandAll();                   // 打开所有菜单
+myMenu.collapseAll();                 // 关闭所有菜单
+-->
+  <!--<div style="display:inline-block;margin:0px 0px 0px 960px;"/>
+           <a href="/jys/login/">{{username}}
+       <a href="{% url 'jys:logout'%}" ><input type="button" value="注销" class="btn btn-success"></a>
+  </div>
+  -->
