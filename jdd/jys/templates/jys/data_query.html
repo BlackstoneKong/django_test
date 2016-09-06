@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<script type="text/javascript" charset="utf-8">; 
+    //保留关键字
+    function test(name){
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null){
+        return  decodeURI(r[2].replace(/\+/g, '%20')); 
+        }
+        return null;
+    }
+
+    //切换搜索指示条
+    function switchhr(hr_position)
+    {       
+        document.getElementById("currentpage").value=1; 
+        document.getElementsByClassName("choclass")[0].style.opacity="0.5";
+        document.getElementsByClassName("choclass")[1].style.opacity="0.5";
+        document.getElementsByClassName("choclass")[2].style.opacity="0.5";
+        document.getElementsByClassName("choclass")[3].style.opacity="0.5";
+        document.getElementsByClassName("choclass")[4].style.opacity="0.5";
+        document.getElementsByClassName("choclass")[5].style.opacity="0.5";
+        document.getElementsByClassName("choclass")[hr_position].style.opacity="1";
+        document.getElementsByClassName("choclass")[hr_position].style.fontSize="16px";
+        if(hr_position==0){
+            document.getElementById("hrid").style.left="-481px";
+            document.getElementById("chooseid").value="0";
+        }
+        else if(hr_position==1){
+            document.getElementById("hrid").style.left="-400px";
+            document.getElementById("chooseid").value="1";
+        }
+        else if(hr_position==2){
+            document.getElementById("hrid").style.left="-321px";
+            document.getElementById("chooseid").value="2";
+        }
+        else if(hr_position==3){
+            document.getElementById("hrid").style.left="-241px";
+            document.getElementById("chooseid").value="3";
+        }
+        else if(hr_position==4){
+            document.getElementById("hrid").style.left="-161px";
+            document.getElementById("chooseid").value="4";
+        }
+        else if(hr_position==5){
+            document.getElementById("hrid").style.left="-81px";
+            document.getElementById("chooseid").value="5";
+        }
+    }
+
+    //记录搜索指示条
+    function recordHr(){
+        if (document.getElementById("hrid").style.left=="-481px") {
+            document.getElementById("chooseid").value="0";
+        }
+        else if (document.getElementById("hrid").style.left=="-400px") {
+            document.getElementById("chooseid").value="1";
+        }
+        else if (document.getElementById("hrid").style.left=="-321px") {
+            document.getElementById("chooseid").value="2";
+        }
+        else if (document.getElementById("hrid").style.left=="-241px") {
+            document.getElementById("chooseid").value="3";
+        }
+        else if (document.getElementById("hrid").style.left=="-161px") {
+            document.getElementById("chooseid").value="4";
+        }
+        else if (document.getElementById("hrid").style.left=="-81px") {
+            document.getElementById("chooseid").value="5";
+        }
+    }
+
+    //高亮关键字文本
+    function highLight(keywords){
+    
+    this.formatKeyword=function(content,keyword)
+    {   
+        if (keyword==' ') {return content;}
+        var reg=new RegExp('('+keyword+')','gi');
+        return content.replace(reg,'<span>$1</span>');
+    }
+    this.refreshContent=function(contentID){
+        var resultlength=document.getElementsByClassName(contentID).length;
+        for (var k = 0; k < resultlength; k++) {
+        var content=document.getElementsByClassName(contentID)[k].innerHTML;
+        for (var i = 0; i < keywords.length; i++) {
+
+            var key=keywords[i];
+            content=this.formatKeyword(content,key);
+        }
+        document.getElementsByClassName(contentID)[k].innerHTML=content;
+    }
+
+    }
+}
+    //选择submit还是ajax
+    function submitorajax(){
+    	if (event.keyCode==13){
+            document.getElementById('currentpage').value="1";
+            bySubmit();
+        } 
+            
+    	else
+        {
+    		byAjax();
+        }
+    }
+    function bySubmit(){
+        recordHr();
+        document.getElementById('resultid2').style.display="none";
+        document.getElementById('resultid1').style.display="";
+        document.getElementById('login_form').submit();
+
+
+    }
+    function byAjax(page_serial){
+		//document.getElementById('resultid1').style.display="none";
+		//document.getElementById('resultid2').style.display="";
+		handleImgButtonPress(page_serial);
+
+    }
+    //一种简单的弹窗效果，效果达不到预期
+    function showPopup(w,h){
+        var popUp=document.getElementById("eachresult");
+        popUp.style.top="200px";
+        popUp.style.left="200px";
+        popUp.style.width=w+"px";
+        popUp.style.height=h+"px";
+        if (basetext==null) {
+            basetext=popUp.innerHTML;
+        }
+        popUp.innerHTML=basetext+"<div id=\"statusbar\"><button onclick=\"hidePopup();\">Close window</button></div>";
+        var sbar=document.getElementById("statusbar");
+        sbar.style.marginTop=(parseInt(40)-40)+"px";
+        popUp.style.visibility="visible";
+    }
+    function hidePopup(){
+        var popUp=document.getElementById("eachresult");
+        popUp.style.visibility="hidden";
+}
+    //另一种弹窗效果，效果很好
+    function showProc(){
+        message_box.style.visibility="visible";
+        //创建灰色背景层
+        procbg=document.createElement("div");
+        procbg.setAttribute("id","mybg");
+        procbg.style.background="white";
+        procbg.style.width="100%";
+        procbg.style.height="100%";
+        procbg.style.position="absolute";
+        procbg.style.top="0";
+        procbg.style.left="0";
+        procbg.style.zIndex="500";
+        procbg.style.opacity="0.95";
+        procbg.style.filter="Alpha(opacity=95)";
+        //背景层加入页面
+        document.body.appendChild(procbg);
+        document.body.style.overflow="hidden";
+    }
+    
+    function closeProc(){
+        message_box.style.visibility="hidden";
+        procbg.style.visibility="hidden";
+    }
+
+    function clickLeft(){
+        if (parseInt(document.getElementById('thepage').innerHTML)>1) {
+            byAjax(parseInt(document.getElementById('hiddenpage').value)-1)
+        }
+        else
+            alert('这已经是第一题了！')
+    }
+    function clickRight(){
+        if (parseInt(document.getElementById('thepage').innerHTML)<parseInt(document.getElementById('counts').innerHTML)) {
+            byAjax(parseInt(document.getElementById('hiddenpage').value)+1)
+        }
+        else
+            alert('这已经是最后一题了！')
+    }
+</script>
+
+{% extends 'base.html' %}
+{% load staticfiles %} 
+{% block content_block %}
+<style type="text/css">
+div.result1{width: 1050px;height:auto;font-size: 13px;position:relative;top:50px;left: 10px; border-left: none;color:;}
+div.result2{width: 580px;height:auto;font-size: 13px;position:relative;top:50px;left: 10px; border-left: none;}
+div.options{ width: 1042px;height:19px;font-size: 18px;position:relative;top:3px;left: -13px; background-color: transparent;border-left: none;border-right:none;border-top:none;font-size:15px;}
+div.page{text-align:left;margin:30px 0px 50px 0px;}
+div.page a,.page span{text-decoration:none;border: 1px solid silver;padding: 5px 7px;color:#767675;cursor: pointer; }
+div.page a:hover{background: lightgray}
+div.page span:hover{background: lightgray}
+#login_form input[type="submit"]{background:url("{% static "jys/image/sousuo.png" %}")no-repeat; position:relative;left:-46px;top:9px; padding:10px 0px 10px -20px;width:36px;height:35px;background-color: white;}
+#sid{z-index:1;height:39px;width:450px;left:150px;top:43px;font-size: 18px;font-family:黑体;}
+#hrid{border:1px solid red;;position:relative;top:25px;left:-481px;width:45px}
+#navdiv{position:absolute;left:15px;top:60px;border-bottom:1px solid #EFECE5;width:445px}
+#searchresults span{color:#c00}
+#eachresult{position: absolute;visibility: hidden;overflow: hidden;border: 1px solid #ccc;background-color: #F9F9F9;border: 1px solid #333;padding: 5px}
+.results span{color:#c00;}
+div.content{box-shadow: 1px 1px 8px -1px gray;overflow:auto;border:1px;font-size: 18px;padding:30px 0px 30px 145px;width: 1221px;height:562px;position:absolute;top:52px;left: 0px;border-left: 1px solid silver;border-right:none;background-color: transparent;}
+</style>
+    <!--一个关键字input、一个选择分类input、一个页码input-->
+    <form  style="width:500px;padding:100px 300px 0px 300px;" name="form1" id='login_form' action="/jys/data_query/search/" method="get" dir autocapitalize="off" autocorrect="off" autocomplete="off" >
+        <img id='yanshilogo' style="position:absolute;height:14%;width:14%;margin:0px -10px -15px 125px" src="{% static 'jys/image/yanshi3.png' %}">
+        <div id='divv' style="position:absolute;top:230px">
+            <input autofocus type="search"   name="q" id="sid">
+            <input type="hidden" name="cho" id='chooseid' value="0">
+            <input type="hidden" name="np" id='currentpage' value=1>
+            <a href="" onClick="submitorajax()" style="position:relative;left:-46px;top:11px">
+            <img id="submit_img_button" src="{% static "jys/image/sousuo.png" %}">
+            </a>
+            <div id="optionid" class="options">
+            <hr id="hrid">
+            <table cellpadding="25" cellspacing="0" >
+                <tr>
+                    <td ><a class="choclass" style="text-decoration:none" href="" onClick="switchhr(0); bySubmit(); return false;">单选</td>
+                    <td ><a class="choclass" style="text-decoration:none" href="" onClick="switchhr(1); bySubmit(); return false;">多选</td>
+                    <td ><a class="choclass" style="text-decoration:none" href="" onClick="switchhr(2); bySubmit(); return false;">判断</td>
+                    <td ><a class="choclass" style="text-decoration:none" href="" onClick="switchhr(3); bySubmit(); return false;">填空</td>
+                    <td ><a class="choclass" style="text-decoration:none" href="" onClick="switchhr(4); bySubmit(); return false;">简答</td>                    
+                    <td ><a class="choclass" style="text-decoration:none" href="" onClick="switchhr(5); bySubmit(); return false;">论述</td>                                      
+                </tr>
+            </table>
+            <table id='navdiv'></table>
+        </div>
+        </div>
+
+    </form>
+
+    <!--错误处理-->
+    {% if errors %}
+        {% for error in errors %}
+            {{ error }}
+        {% endfor %}
+    {% endif %}
+
+    <!--尝试使用Ajax：submit和ajax-->
+    <div class='result1' id="resultid1">{% block result_block %}{% endblock %}</div>
+    <div class='result2' id="resultid2"></div>
+
+    <!--添加弹窗-->
+    <!--<div id="eachresult">这是一个弹窗效果！</div>-->
+    <!--<a href="#" style="margin:500px" onclick="showProc()">显示窗口</a>-->
+
+    <div id="message_box" style="width:750px;height:480px;z-index:2000;visibility:hidden;cursor:pointer;">
+        <div id="message" style="box-shadow: 1px 3px 18px -1px silver;width:100%;height:100%;background:white;color:#036;font-size:14px;line-height:200%;border-radius:5px">
+            <div style="background:rgb(251,251,251);height:10%;font-family:Verdana,Arial,Helvetica,sans-serif;font-size:12px;padding:3 5 0 5;cursor:pointer;color:#fff;border-top-left-radius:5px;border-top-right-radius:5px">
+                <span style="cursor:pointer;display:inline;width:150px;position:absolute;font-size:150%;"></span>
+                <img src="{% static 'jys/image/guanbi.png' %}" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0" onclick="closeProc()" style="float:right;display:inline;font-size:150%;opacity:0"> 
+            </div>
+            <div id='eachquestion' style="position:absolute;left:50px;height:378px;width:651px;font-family:微软雅黑;">
+                1
+            </div>
+            <img src="{% static 'jys/image/leftarrow.png' %}" onmouseover="this.style.opacity=1;" onmouseout="this.style.opacity=0;" onclick="clickLeft();" style="position:absolute;opacity:0">
+            <img src="{% static 'jys/image/rightarrow.png' %}" onmouseover="this.style.opacity=1;;" onmouseout="this.style.opacity=0;" onclick="clickRight();" style="position:absolute;left:702px;opacity:0">
+            <div style="border-bottom-left-radius:5px;border-bottom-right-radius:5px;position:absolute;top:435px;width:750px;height:46px;background:rgb(251,251,251);"></div>
+        </div>
+    </div>
+<script charset="utf-8">
+
+    var basetext=null;
+
+    var dragging=false;
+    var test;
+    var mouseY;
+    var mouseX;
+    
+    test=document.getElementById("message_box");
+
+    test.onmousedown=down;
+    test.onmousemove=move;
+    document.onmouseup=up;
+    test.style.position="fixed";
+    test.style.top="90px";
+    test.style.left="300px";
+    function down(event){
+        event=event||window.event;
+        dragging=true;
+        mouseX=parseInt(event.clientX);
+        mouseY=parseInt(event.clientY);
+        objY=parseInt(test.style.top);
+        objX=parseInt(test.style.left);
+    }
+    function move(event){
+        event=event||window.event;
+        if (dragging==true) {
+            var x,y;
+            y=event.clientY-mouseY+objY;
+            x=event.clientX-mouseX+objX;
+            test.style.top=y+"px";
+            test.style.left=x+"px";
+        }
+    }
+    function up(){
+        dragging=false;
+        test.style.top="90px";
+        test.style.left="300px";
+    }
+
+
+
+    //输入关键字时为了解决拼音输入法问题引入以下代码
+    var cplock=false;
+    var node=document.querySelector('#sid');
+
+    node.addEventListener('compositionstart',function(){
+        cplock=true;
+    })
+    node.addEventListener('compositionend',function(){
+        cplock=false;
+    })
+    node.addEventListener('input',function(){
+        if (!cplock) { 
+            document.getElementById('currentpage').value='1';
+            bySubmit();
+        }
+    })
+
+    //关键字格式预处理
+	var httpRequest;
+    document.getElementById('sid').value=decodeURI(document.location.href.split('?')[1].split('=')[1].split('&')[0].replace(/\+/g, '%20').replace(/\%5C/g, "\\").replace(/\%7C/g,'|').replace(/\%23/g, '#').replace(/\%2B/g, '+').replace(/\%40/g, '@').replace(/\%26/g, '&').replace(/\%3F/g, '?').replace(/^\s*/g,"").replace(/\%2C/g, ',').replace(/\s*$/g,""));
+
+    //选择分类的指示条处理
+    switchhr(Number(document.location.href.split('&')[1].split('=')[1]));
+
+    //点击搜索图标也能调用Ajax
+	document.getElementById("submit_img_button").onclick=handleImgButtonPress;
+
+
+
+    
+
+    //高亮关键字文本
+    var keywords=document.getElementById('sid').value;
+    var hl=new highLight(keywords);
+    hl.refreshContent("results");
+
+    //页码样式修改
+    var pn=document.location.href.split('np')[1].split('=')[1].replace('#','');
+    document.getElementById('currentpage').value=pn;
+    if (pn>1) {
+        document.getElementById('beforepage').style.display="";
+       }
+    else
+        document.getElementById('beforepage').style.display="none";
+    var pagei=0;
+    for (var i = (pn-4); i < (pn+5); i++) {
+        //document.getElementsByClassName('pages').style.background="transparent";
+        if (i==pn) {
+            if ((i%5)==0) {
+                pagei=4;
+            }
+            else
+                pagei=i%5-1;
+            document.getElementsByClassName('pages')[pagei].style.background="lightgray";
+        }
+    }   
+    
+	//Ajax处理
+	function handleImgButtonPress(e){
+        document.getElementById('hiddenpage').value=e;
+		var form=document.getElementById("login_form");
+		//var formData=document.getElementById("sid").name+"="+document.getElementById("sid").value.replace(/^\s*/g,"").replace(/\s*$/g,"")+"";
+        var formData=document.location.href.split('?')[1].replace('#','')+"&ps="+e;
+		httpRequest=new XMLHttpRequest();
+		httpRequest.onreadystatechange=handleResponse;
+		httpRequest.open("GET",'/jys/search/'+'?'+formData);
+		httpRequest.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		httpRequest.send();
+
+	}
+	function handleResponse(){
+		if (httpRequest.readyState==4 && httpRequest.status==200) {
+
+			document.getElementById("eachquestion").innerHTML=httpRequest.responseText;
+		}
+	}
+
+    //翻页处理
+    function displayPage(page){
+        if (page=='+1') {
+            document.getElementById('currentpage').value++;
+        }
+        else if (page=='-1') {
+            document.getElementById('currentpage').value--;
+        }
+        else
+        {
+            document.getElementById('currentpage').value=page;
+        }
+        bySubmit(document.getElementById('currentpage').value);
+
+    }
+    //拖动
+    /*
+    var dragging=false;
+    var test;
+    var mouseY;
+    var mouseX;
+    window.onload=function(){
+        
+        test=document.getElementById("message_box");
+        test.onmousedown=down;
+        test.onmousemove=move;
+        document.onmouseup=up;
+        test.style.position="absolute";
+        test.style.top="100px";
+        test.style.left="400px";
+        function down(event){
+            event=event||window.event;
+            dragging=true;
+            mouseX=parseInt(event.clientX);
+            mouseY=parseInt(event.clientY);
+            objY=parseInt(test.style.top);
+            objX=parseInt(test.style.left);
+        }
+        function move(event){
+            event=event||window.event;
+            if (dragging==true) {
+                var x,y;
+                y=event.clientY-mouseY+objY;
+                x=event.clientX-mouseX+objX;
+                test.style.top=y+"px";
+                test.style.left=x+"px";
+            }
+        }
+        function up(){
+            dragging=false;
+        }
+    }
+    */
+</script>
+{% endblock %}
+<script type="text/javascript">
+    
+</script>

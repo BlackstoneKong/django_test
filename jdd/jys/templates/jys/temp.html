@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html"; charset="utf-8">
+	<title>可拖动的DIV</title>
+<script type="text/javascript">
+	function showProc(){
+		message_box.style.visibility="visible";
+		//创建灰色背景层
+		procbg=document.createElement("div");
+		procbg.setAttribute("id","mybg");
+		procbg.style.background="#000";
+		procbg.style.width="100%";
+		procbg.style.height="100%";
+		procbg.style.position="absolute";
+		procbg.style.top="0";
+		procbg.style.left="0";
+		procbg.style.zIndex="500";
+		procbg.style.opacity="0.3";
+		procbg.style.filter="Alpha(opacity=30)";
+		//背景层加入页面
+		document.body.appendChild(procbg);
+		document.body.style.overflow="hidden";
+	}
+	//拖动
+	var dragging=false;
+	var test;
+	var mouseY;
+	var mouseX;
+	window.onload=function(){
+		test=document.getElementById("message_box");
+		test.onmousedown=down;
+		test.onmousemove=move;
+		document.onmouseup=up;
+		test.style.position="absolute";
+		test.style.top="100px";
+		test.style.left="400px";
+		function down(event){
+			event=event||window.event;
+			dragging=true;
+			mouseX=parseInt(event.clientX);
+			mouseY=parseInt(event.clientY);
+			objY=parseInt(test.style.top);
+			objX=parseInt(test.style.left);
+		}
+		function move(event){
+			event=event||window.event;
+			if (dragging==true) {
+				var x,y;
+				y=event.clientY-mouseY+objY;
+				x=event.clientX-mouseX+objX;
+				test.style.top=y+"px";
+				test.style.left=x+"px";
+			}
+		}
+		function up(){
+			dragging=false;
+		}
+	}
+	function closeProc(){
+		message_box.style.visibility="hidden";
+		procbg.style.visibility="hidden";
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="弹出可拖动DIV" onclick="showProc()"/>
+	<div id="message_box" style="width:450px;height:250px;z-index:1000;visibility:hidden">
+		<div id="message" style="border:1px #036 solid;width:95%;height:95%;background:#fff;color:#036;font-size:14px;line-height:150%;">
+			<div style="background:#95BDD4;height:10%;font-family:Verdana,Arial,Helvetica,sans-serif;font-size:12px;padding:3 5 0 5;color:#fff">
+				<span style="cursor:pointer;display:inline;width:150px;position:absolute;font-size:150%">标题项</span>
+				<span onclick="closeProc()" style="float:right;display:inline;cursor:pointer;font-size:150%">×</span>
+			</div>
+			<div style="text-align:center">
+				正在进行格式化，请稍等……
+			</div>
+		</div>
+	</div>
+</body>
+</html>

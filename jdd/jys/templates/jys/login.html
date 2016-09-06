@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--CSS样式定义searchBox的样式-->
+<!--CSS样式定义searchBox的样式-->
+{% load staticfiles %} 
+<style type="text/css">
+
+~div,form{border:1px solid red;}
+body{width:960px;margin:0.1px auto;background-image: url("{% static "jys/image/bj.png" %}");}
+#title{text-align: center;margin:60px 30px 1px 30px;padding:0px;}
+.login_beijing{position:absolute;z-index:1;float:left;margin:40px 40px 40px 200px;}
+.login_part{position:absolute;z-index:2;top:220px;left:600px;float:left;margin:40px 0px 0px 105px;}
+.login_image{ position:absolute;z-index:2;top:230px;left:170px;float:left;margin:0px 0px 0px 260px;}
+#login_form input{display:block;margin:0px auto;height: 35px;}
+#login_form input[type=submit]{background:url("{% static "jys/image/btn.png" %}")no-repeat; padding:0px;display:inline-block;width:215px;height:42px;size:50px;margin:-3px 0px 0px -40px;}
+.error-in-form{position:absolute;z-index:2;top:215px;left:665px;}
+.remeberstate-in-form{font-size: 13px;}
+.searchBox{	background-repeat: no-repeat;	padding-left: 20px;}
+</style>
+
+<html>
+<head>
+<script type="text/javascript">
+</script>
+	<title>登录</title>
+</head>
+<body >
+	<div align="center">
+			<img src="{% static "jys/image/4.png" %}" alt="logo">
+	</div>
+
+
+
+	<div class="login_beijing">
+		 <img src="{% static "jys/image/touming1.png" %}" height="300px">
+	</div>
+
+	<div class="error-in-form">
+	{% for item in error %}
+		<p style="color:red;">{{item}}</p>
+	{% endfor %}
+	</div>
+
+	<div class='login_image' >
+  	<img src="{% static "jys/image/xi.png" %}" height="250px">
+  	</div>
+
+	<div class='login_part' >
+		<img src="{% static "jys/image/name.png" %}" style="position:fixed;height:41px;top:284px;left:665px;" /> 
+		<img src="{% static "jys/image/mima.png" %}" style="z-index:10;position:fixed;height:41px;top:349px;left:665px;" /> 
+		<form  id='login_form' method="post" action="/jys/login/" name="test">
+			{% csrf_token %}
+			<table align="center" class="login_table" autofocus>
+				{{form.as_p}}
+			</table>
+				<div class="button-in-form" >
+				<input type="submit"  value="" >
+				</div>
+			<div align="center" class="remeberstate-in-form" style="top:200px;left:12px;position:absolute">
+				还没有系统账户？
+				<span><a href="{% url 'jys:register'%}">立即注册
+				</a></span>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

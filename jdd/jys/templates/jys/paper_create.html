@@ -1,0 +1,60 @@
+<!--试卷生成模板-->
+{% extends 'base.html' %}
+{% block content_block %}
+<script type="text/javascript">
+	function changeNavborder(b){
+		document.getElementsByClassName('papernavclass')[0].style.border='none';
+		document.getElementsByClassName('papernavclass')[1].style.border='none';
+		document.getElementsByClassName('papernavclass')[2].style.border='none';
+		document.getElementsByClassName('papernavclass')[3].style.border='none';
+		document.getElementsByClassName('papernavclass')[b].style.borderRight='solid lightgray 1px';
+		document.getElementsByClassName('papernavclass')[b].style.borderLeft='solid lightgray 1px';
+		document.getElementsByClassName('papernavclass')[b].style.borderBottom='solid white 1px'
+	}
+</script>
+<style type="text/css">
+	.papernavclass {z-index:4;position:fixed;top:51px;height:20px;}
+</style>
+<div class="papernavclass" style="left:-1px;width:48px;border-right:solid lightgray 1px;border-bottom:solid white 1px" onclick="changeNavborder(0)"></div>
+<div class="papernavclass" style="left:47px;width:53px;h" onclick="changeNavborder(1)"></div>
+<div class="papernavclass" style="left:101px;width:48px;" onclick="changeNavborder(2)"></div>
+<div class="papernavclass" style="left:150px;width:54px;" onclick="changeNavborder(3)"></div>
+<div style="z-index:3;position:fixed;width:1365px;height:20px;background:white;margin:-31px 0px 10px -146px">
+	<div style="font-size:12px;font-family:微软雅黑">
+		<span style="padding:0px 12px">开始</span>
+		<span style="padding:0px 12px">选项</span>
+		<span style="padding:0px 12px">设计</span>
+		<span style="padding:0px 12px">帮助</span>
+	</div>
+
+</div>
+<div id='paper_condition_id' style="box-shadow: 1px 1px 8px -1px gray;z-index:1;position:fixed;font-size:12px;font-family:微软雅黑;margin:-11px 0px 10px -146px;width:1345px;height:74px;padding:6px 10px;border:2px lightgray solid;border-top:solid lightgray 1px;background:white">
+<form id='paper_create_form' action="{% url 'jys:paper_created' %}" method="post">
+{% csrf_token %}
+<div style="float:left;width:40px;height:70px;display:inline;">
+	<br>题数:<br>分值:</div>
+
+<div onmouseover="this.style.background='lightgray'" onmouseout="this.style.background='transparent'" style="float:left;width:50px;height:70px;display:inline;padding:0px 0px">
+&nbsp;&nbsp;单选&nbsp;&nbsp;&nbsp;<br>
+<input style="border:lightgray solid 1px;width:50px;height:20px;appearance:none" type="number" name="choice_question_select" id="danxuanid" class="navclass" min="0" max="100" step="1" value="0"><br><input style="border:lightgray solid 1px;width:50px;height:20px;appearance:none" type="number" name="choice_question_selectfenzhi" id="danxuanfenzhiid" min="0" max="100" step="1" value="0"></div>
+
+<div onmouseover="this.style.background='lightgray'" onmouseout="this.style.background='transparent'" style="width:50px;float:left;height:70px;display:inline;padding:0px 0px"">
+&nbsp;&nbsp;多选&nbsp;&nbsp;&nbsp;<br>
+<input style="border:lightgray solid 1px;width:50px;height:20px;" type="number" name="duoxuan" id="duoxuanid"  class="navclass"  min="0" max="100" step="1" value="0"><br><input style="border:lightgray solid 1px;width:50px;height:20px;appearance:none" type="number" name="choice_question_selectfenzhi" id="danxuanfenzhiid" min="0" max="100" step="1" value="0"></div>
+
+<div onmouseover="this.style.background='lightgray'" onmouseout="this.style.background='transparent'" style="width:50px;float:left;height:70px;display:inline;padding:0px 0px"">&nbsp;&nbsp;判断&nbsp;&nbsp;&nbsp;<br><input style="border:lightgray solid 1px;width:50px;height:20px;" type="number" name="panduan" id="panduanid" class="navclass" min="0" max="100" step="1" value="0"><br><input style="border:lightgray solid 1px;width:50px;height:20px;appearance:none" type="number" name="choice_question_selectfenzhi" id="danxuanfenzhiid" min="0" max="100" step="1" value="0"></div>
+
+<div onmouseover="this.style.background='lightgray'" onmouseout="this.style.background='transparent'" style="width:50px;float:left;height:70px;display:inline;padding:0px 0px"">&nbsp;&nbsp;填空&nbsp;&nbsp;&nbsp;<br><input style="border:lightgray solid 1px;width:50px;height:20px;" type="number" name="tiankong" id="tiankongid"  class="navclass" min="0" max="100" step="1" value="0"><br><input style="border:lightgray solid 1px;width:50px;height:20px;appearance:none" type="number" name="choice_question_selectfenzhi" id="danxuanfenzhiid" min="0" max="100" step="1" value="0"></div>
+
+<div onmouseover="this.style.background='lightgray'" onmouseout="this.style.background='transparent'" style="width:50px;float:left;height:70px;display:inline;padding:0px 0px"">&nbsp;&nbsp;简答&nbsp;&nbsp;&nbsp;<br><input style="border:lightgray solid 1px;width:50px;height:20px;" type="number" name="jianda" id="jiandaid"  class="navclass" min="0" max="100" step="1" value="0"><br><input onchange="alert(1)" style="border:lightgray solid 1px;width:50px;height:20px;appearance:none" type="number" name="choice_question_selectfenzhi" id="danxuanfenzhiid" min="0" max="100" step="1" value="0"></div>
+
+<div onmouseover="this.style.background='lightgray'" onmouseout="this.style.background='transparent'" style="width:50px;float:left;height:70px;display:inline;padding:0px 0px"">&nbsp;&nbsp;论述&nbsp;&nbsp;&nbsp;<br><input style="border:lightgray solid 1px;width:50px;height:20px;" type="number" name="lunshu" id="lunshuid"  class="navclass" min="0" max="100" step="1" value="0"><br><input style="border:lightgray solid 1px;width:50px;height:20px;appearance:none" type="number" name="choice_question_selectfenzhi" id="danxuanfenzhiid" min="0" max="100" step="1" value="0"></div>
+	
+	<input onclick="handlepaperButton(1);setTitle()" style="float:left;display:inline;height:70px;font-family:微软雅黑;margin:0px 0px 0px 935px" type="button" value="生成试卷" />
+
+	</form>
+	<br>
+</div>
+<div id="papercontent"  style="overflow:scroll;z-index:0;position:absolute;top:150px;width:980px;height:3000px;border:1px solid lightgray;padding:80px 40px 80px 40px;background:lightgreen"></div>
+
+{% endblock %}

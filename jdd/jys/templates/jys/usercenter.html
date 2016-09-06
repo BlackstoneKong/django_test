@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title_block %}
+个人中心
+{% endblock %}
+{% block content_block %}
+<style type="text/css">
+	#topback{border:solid transparent 1px;margin:-32px 200px 0px 0px;height:230px;background:rgb(47,55,61);}
+	#bodyback{
+		border:solid transparent 1px;margin:0px 200px 
+		0px 0px;height:1830px;background:
+		gray;
+	}
+	div{text-align: center; font-family: 华文黑体;background: transparent;}
+	div.bodycontent{border-left:solid silver 1px;float:left;font-size:15px;width:80px;height:25px;padding:10px 12.79px;background:white;border-radius:0px}
+</style>
+<div id="topback">
+	<div style="z-index:1;align:center;margin:20px 450px 0px 470px;height:150px;width:150px;border:1px transparent red;background:gray;border-radius:100px">
+		<a href=""><img style="z-index:-1;border-radius:100px;border:solid gray 4px;width:150px;height:150px" src="{% static 'jys/image/1.jpg' %}"></a><!--用户的照片-->
+	</div>
+	<div style="z-index:0;align:center;margin:10px 470px 0px 470px;height:20px;width:150px;color:white">
+		我的名字是雅典娜
+	</div>
+	<div style="margin:0px 470px;height:20px;width:150px;font-size:10px;">
+		<a href="#" style="color:white">编辑资料</a>
+	</div>
+
+</div>	
+<div id="bodyback">
+	<div class="bodycontent">我的成绩</div>
+	<div class="bodycontent">作业本</div>
+	<div class="bodycontent">我的考卷</div>
+	<div class="bodycontent">搜索历史</div>
+	<div class="bodycontent">我的收藏</div>
+	<div class="bodycontent">我点的赞</div>
+	<div class="bodycontent">我的帖子</div>
+	<div class="bodycontent">我的好友</div>
+	<div class="bodycontent">系统消息</div>
+	<div class="bodycontent">好友私信</div>
+</div>
+
+{% endblock %}
